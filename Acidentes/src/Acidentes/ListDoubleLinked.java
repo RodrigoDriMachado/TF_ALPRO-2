@@ -248,9 +248,10 @@ public class ListDoubleLinked<E> implements ListTAD<E> {
     public String toString() {
         StringBuilder s = new StringBuilder();
         Node<E> aux = header.next;
+        System.out.println("count="+count);
         for (int i = 0; i < count; i++) {
-            s.append(aux.element.toString());
-            s.append("\n");
+            //s.append(aux.element.toString());
+            //s.append("\n");
             aux = aux.next;
         }
         return s.toString();

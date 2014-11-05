@@ -58,15 +58,15 @@ public class CadastroAcidentes {
 
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.defaultCharset()))) {
             String str = null, nome_r = null, pref_rua = null, data = null;
-            sc.useDelimiter("[./;n]"); // separadores: ; e nova linha
+            sc.useDelimiter("[/;n]"); // separadores: ; e nova linha
+            sc.nextLine();
             while (sc.hasNext()) {
-                System.out.println("passei por aqui");
                 str = sc.next();
                 pref_rua = str;
                 nome_r = sc.next();
                 data = sc.next();
                 Acidente a = new Acidente(pref_rua, nome_r, data);
-                lista.add(a);
+                cad.add(a);
                 //sc.next("/n");
             }
         } catch (IOException e) {

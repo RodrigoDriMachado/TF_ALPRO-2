@@ -226,4 +226,9 @@ public class Acidente {
         this.qntd_bicicleta = qntd_bicicleta;
     }*/
 
+    @Override
+    public String toString() {
+        return "Acidente{" + "pref_rua=" + pref_rua + ", nome_rua=" + nome_rua + ", data=" + data + '}';
+    }
+
 }
