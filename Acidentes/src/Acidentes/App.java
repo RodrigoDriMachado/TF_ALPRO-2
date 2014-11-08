@@ -15,7 +15,8 @@ public class App {
     public static void main(String[] args) {
         
         CadastroAcidentes cads = CadastroAcidentes.getInstance();
-        if(cads.readFile("acidentes.csv"))
+        cads.cleanAll();
+        if(cads.readFile("teste.csv"))
             System.out.println(cads.toString());
         else{
             System.out.println("erro ao ler arquvio");

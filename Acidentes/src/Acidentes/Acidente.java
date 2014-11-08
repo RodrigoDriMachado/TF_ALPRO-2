@@ -11,9 +11,9 @@ package Acidentes;
 
 public class Acidente {
 
-    private String pref_rua;
+//    private String pref_rua;
     private String nome_rua;
-  //  private String tp_acidente;
+    private String tp_acidente;
     private String data;
    /* private String dia_sem;
     private String tempo;
@@ -32,14 +32,14 @@ public class Acidente {
     private int qntd_moto;
     private int qntd_carroca;
     private int qntd_bicicleta;*/
-    public Acidente(String pref_rua, String nome_rua, String data) {
+    public Acidente(String nome_rua, String tp_acndt, String data) {
         
-        this.pref_rua = pref_rua;
+        //this.pref_rua = pref_rua;
         this.nome_rua = nome_rua;
         this.data = data;
-        /*this.tp_acidente = tp_acndt;
+        this.tp_acidente = tp_acndt;
       
-        this.dia_sem = dia_sem;
+        /*this.dia_sem = dia_sem;
         this.tempo = tmp;
         this.turno = turn;
         this.regiao = reg;
@@ -58,13 +58,13 @@ public class Acidente {
         this.qntd_bicicleta = qntd_bicicleta;*/
     }
 
-    public String getPref_rua() {
+   /* public String getPref_rua() {
         return pref_rua;
     }
 
     public void setPref_rua(String pref_rua) {
         this.pref_rua = pref_rua;
-    }
+    }*/
 
     public String getNome_rua() {
         return nome_rua;
@@ -77,7 +77,7 @@ public class Acidente {
     public String getData() {
         return data;
     }
-    /*
+    
     public String getTp_acidente() {
         return tp_acidente;
     }
@@ -89,7 +89,7 @@ public class Acidente {
     public void setData(String data) {
         this.data = data;
     }
-
+/*
     public String getDia_sem() {
         return dia_sem;
     }
@@ -228,7 +228,8 @@ public class Acidente {
 
     @Override
     public String toString() {
-        return "Acidente{" + "pref_rua=" + pref_rua + ", nome_rua=" + nome_rua + ", data=" + data + '}';
+        return "Acidente{" + "nome_rua=" + nome_rua + ", tp_acidente=" + tp_acidente + ", data=" + data + '}';
     }
+
 
 }

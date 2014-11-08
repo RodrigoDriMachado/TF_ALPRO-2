@@ -19,11 +19,11 @@ import java.util.Scanner;
 
 public class CadastroAcidentes {
 
-    private ListDoubleLinked<Acidente> lista;
+    private ListDoubleLinked lista;
     private static CadastroAcidentes cad = null;
 
     private CadastroAcidentes() {
-        lista = new ListDoubleLinked<>();
+        lista = new ListDoubleLinked();
     }
 
     public static CadastroAcidentes getInstance() {
@@ -58,15 +58,17 @@ public class CadastroAcidentes {
 
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.defaultCharset()))) {
             String str = null, nome_r = null, pref_rua = null, data = null;
-            sc.useDelimiter("[/;n]"); // separadores: ; e nova linha
+            sc.useDelimiter("[;//n]"); // separadores: ; e nova linha
             sc.nextLine();
             while (sc.hasNext()) {
-                str = sc.next();
-                pref_rua = str;
-                nome_r = sc.next();
-                data = sc.next();
-                Acidente a = new Acidente(pref_rua, nome_r, data);
-                cad.add(a);
+                System.out.println(".");
+                //str = sc.next();
+                //pref_rua = str;
+                //System.out.println(str);
+                //nome_r = sc.next();
+                //data = sc.next();
+                //Acidente a = new Acidente(pref_rua, nome_r, data);
+                //cad.add(a);
                 //sc.next("/n");
             }
         } catch (IOException e) {
