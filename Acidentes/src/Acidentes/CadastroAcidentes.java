@@ -53,30 +53,28 @@ public class CadastroAcidentes {
      return true;
 
      }*/
-    public boolean readFile(String nomeArq) {
+     public boolean readFile(String nomeArq) {
         Path path = Paths.get(nomeArq);
-
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.defaultCharset()))) {
-            String str = null, nome_r = null, pref_rua = null, data = null;
-            sc.useDelimiter("[;//n]"); // separadores: ; e nova linha
+            String str = null, nome = null, tp_acidente =null;
+            String date =null;
+            sc.useDelimiter("[;\\n]"); // separadores: ; e nova linha
             sc.nextLine();
             while (sc.hasNext()) {
-                System.out.println(".");
-                //str = sc.next();
-                //pref_rua = str;
-                //System.out.println(str);
-                //nome_r = sc.next();
-                //data = sc.next();
-                //Acidente a = new Acidente(pref_rua, nome_r, data);
-                //cad.add(a);
-                //sc.next("/n");
+                str = sc.next();
+                nome = str;
+                str =  sc.next();
+                tp_acidente = str;
+                str = sc.next();
+                date = str;
+                Acidente a = new  Acidente (nome, tp_acidente, date);
+                lista.add(a);
             }
         } catch (IOException e) {
             return false;
         }
         return true;
     }
-
     @Override
     public String toString() {
         return lista.toString();

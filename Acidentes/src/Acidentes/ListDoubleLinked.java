@@ -16,6 +16,8 @@ public class ListDoubleLinked {
 
     private Node header;
     private Node trailer;
+    private Node headerData;
+    private Node trailerData;
     private int count;
 
     private class Node {
@@ -101,10 +103,9 @@ public class ListDoubleLinked {
     public String toString() {
         StringBuilder s = new StringBuilder();
         Node aux = header.nextRua;
-        System.out.println("count="+count);
         for (int i = 0; i < count; i++) {
-            //s.append(aux.element.toString());
-            //s.append("\n");
+            s.append(aux.element.toString());
+           System.out.println("\n");
             aux = aux.nextRua;
         }
         return s.toString();
