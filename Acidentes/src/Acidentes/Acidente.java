@@ -9,12 +9,14 @@
  */
 package Acidentes;
 
+import java.util.Date;
+
 public class Acidente {
 
-//    private String pref_rua;
+    private String pref_rua;
     private String nome_rua;
     private String tp_acidente;
-    private String data;
+    private Date data;
    /* private String dia_sem;
     private String tempo;
     private String turno;
@@ -33,15 +35,16 @@ public class Acidente {
     private int qntd_carroca;
     private int qntd_bicicleta;*/
 
-    public Acidente(String nome_rua, String tp_acidente, String data){
+    public Acidente(String prefixo_rua,String nome_rua, String tp_acidente, Date data){
         this.nome_rua = nome_rua;
         this.tp_acidente = tp_acidente;
         this.data = data;
+        this.pref_rua =prefixo_rua;
     }
     
-   /* public String getPref_rua() {
+    public String getPref_rua() {
         return pref_rua;
-    }*/
+    }
 
     public String getNome_rua() {
         return nome_rua;
@@ -51,9 +54,9 @@ public class Acidente {
         return tp_acidente;
     }
 
- /*   public String getData() {
-        return data;
-    }*/
+  public Date getData() {
+        return this.data;
+    }
 /*
     public String getDia_sem() {
         return dia_sem;
@@ -123,9 +126,11 @@ public class Acidente {
         return qntd_bicicleta;
     }
 */
+
     @Override
     public String toString() {
-        return "Acidente{" + "nome_rua= " + nome_rua + " tp_acidente= " + tp_acidente + " data= " + data;
+        return "Acidente[" + "pref_rua=" + pref_rua + "\n"+ "nome_rua=" + nome_rua +"\n"
+                + "tp_acidente=" + tp_acidente +"\n" + "data=" + data + ']';
     }
-
+  
 }

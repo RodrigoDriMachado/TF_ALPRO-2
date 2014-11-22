@@ -15,7 +15,13 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CadastroAcidentes {
 
@@ -41,34 +47,29 @@ public class CadastroAcidentes {
          lista.add(f);
     }
 
-    /* public boolean saveFile(String nomeArq) {
-     Path path1 = Paths.get(nomeArq);
-     try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(path1, Charset.defaultCharset()))) {
-     for (Acidente f : lista) {
-     writer.println(f.getCodigo() + ";" + f.getNome() + ";" + f.getSalarioBruto());
-     }
-     } catch (IOException e) {
-     return false;
-     }
-     return true;
-
-     }*/
      public boolean readFile(String nomeArq) {
         Path path = Paths.get(nomeArq);
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.defaultCharset()))) {
-            String str = null, nome = null, tp_acidente =null;
-            String date =null;
+            String str, nome, tp_acidente,prefixo_rua;
+            Date data =null;
+            SimpleDateFormat format = new SimpleDateFormat("yyyymmdd HH:mm");
             sc.useDelimiter("[;\\n]"); // separadores: ; e nova linha
             sc.nextLine();
             while (sc.hasNext()) {
                 str = sc.next();
+                prefixo_rua = str;
                 nome = str;
                 str =  sc.next();
                 tp_acidente = str;
                 str = sc.next();
-                date = str;
-                Acidente a = new  Acidente (nome, tp_acidente, date);
-                lista.add(a);
+                try {  
+                    data = format.parse(str);
+                } catch (Exception ex) {
+                    System.out.println("Erro: " + ex);
+                }
+                Acidente a = new  Acidente (prefixo_rua,nome, tp_acidente, data);
+                this.lista.add(a);    
+                
             }
         } catch (IOException e) {
             return false;

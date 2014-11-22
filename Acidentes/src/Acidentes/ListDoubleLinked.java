@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license headerRua, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -14,8 +14,8 @@ import java.util.NoSuchElementException;
  */
 public class ListDoubleLinked {
 
-    private Node header;
-    private Node trailer;
+    private Node headerRua;
+    private Node trailerRua;
     private Node headerData;
     private Node trailerData;
     private int count;
@@ -29,38 +29,111 @@ public class ListDoubleLinked {
         public Node prevData;
         public Node currentPositionRua;
         public Node currentPositionData;
-        
+
         public Node(Acidente e) {
             element = e;
             nextRua = null;
             prevRua = null;
             nextData = null;
             prevData = null;
-            currentPositionData=null;
-            currentPositionRua=null;
+            currentPositionData = null;
+            currentPositionRua = null;
         }
 
     }
 
     public ListDoubleLinked() {
-        this.header = new Node(null);
-        this.trailer = new Node(null);
-        header.nextRua = trailer;
-        trailer.prevRua = header;
+        this.headerRua = new Node(null);
+        this.trailerRua = new Node(null);
+        this.headerData = new Node(null);
+        this.trailerData = new Node(null);
+        headerRua.nextRua = trailerRua;
+        trailerRua.prevRua = headerRua;
+        headerData.nextData = trailerData;
+        trailerData.prevData = headerData;
         this.count = 0;
     }
- //Falta inserir metodo de ordenação;
+
     public void add(Acidente element) {
         Node novoNodo = new Node(element);
-        novoNodo.nextRua = trailer;
-        novoNodo.prevRua = trailer.prevRua;
-        trailer.prevRua.nextRua = novoNodo;
-        trailer.prevRua = novoNodo;
+        if (headerData.nextData != trailerData) {
+            Node auxData = headerData.nextData;
+            while (auxData.nextData != trailerData) {
+                //se forem iguais colcoar 
+                //TODO: separar os testes, colocar teste de null
+                try {
+                    if (element.getData().after(auxData.element.getData())) {
+                        if (element.getData().before(auxData.nextData.element.getData())) {
+                            novoNodo.prevData = auxData;
+                            novoNodo.nextData = auxData.nextData;
+                            auxData.nextData.prevData = novoNodo;
+                            auxData.nextData = novoNodo;
+                            return;
+                        } else {
+                            auxData = auxData.nextData;
+                        }
+                    } else {
+                        novoNodo.prevData = auxData;
+                        novoNodo.nextData = auxData.nextData;
+                        auxData.nextData.prevData = novoNodo;
+                        auxData.nextData = novoNodo;
+                        return;
+                    }
+                } catch (Exception exp) {
+                    System.out.println("Erro: " + exp);
+                }
+            }
+            if (auxData.nextData == trailerData) {
+                novoNodo.prevData = trailerData.prevData;
+                novoNodo.nextData = trailerData;
+                trailerData.prevData.nextData = novoNodo;
+                trailerData.prevData = novoNodo;
+            }
+        }
+        else {
+            novoNodo.prevData = trailerData.prevData;
+            novoNodo.nextData = trailerData;
+            trailerData.prevData.nextData = novoNodo;
+            trailerData.prevData = novoNodo;
+        }
+        if (headerRua.nextRua != trailerRua) {
+            Node auxRua = headerRua.nextRua;
+            int str;
+            while (auxRua.nextRua != trailerRua) {
+                str = element.getNome_rua().compareTo(auxRua.element.getNome_rua());
+                if (str < 0) {
+                    novoNodo.nextRua = auxRua;
+                    novoNodo.prevRua = auxRua.prevRua;
+                    auxRua.prevRua.nextRua = novoNodo;
+                    auxRua.prevRua = novoNodo;
+                    return;
+                } else if (str > 0) {
+                    auxRua = auxRua.nextRua;
+                } else {
+                    novoNodo.prevRua = auxRua;
+                    novoNodo.nextRua = auxRua.nextRua;
+                    auxRua.nextRua.prevRua = novoNodo;
+                    auxRua.nextRua = novoNodo;
+                    return;
+                }
+            }
+            if (auxRua.nextRua == trailerRua) {
+                novoNodo.nextRua = trailerRua;
+                novoNodo.prevRua = trailerRua.prevRua;
+                trailerRua.prevRua.nextRua = novoNodo;
+                trailerRua.prevRua = novoNodo;
+            }
+        } else {
+            novoNodo.nextRua = trailerRua;
+            novoNodo.prevRua = trailerRua.prevRua;
+            trailerRua.prevRua.nextRua = novoNodo;
+            trailerRua.prevRua = novoNodo;
+        }
         count++;
     }
 
     public boolean isEmpty() {
-        return count==0;
+        return count == 0;
     }
 
     public int size() {
@@ -68,7 +141,7 @@ public class ListDoubleLinked {
     }
 
     public boolean contains(Acidente element) {
-        Node aux = header.nextRua;
+        Node aux = headerRua.nextRua;
         for (int i = 0; i < count; i++) {
             if (aux.element.equals(element)) {
                 return true;
@@ -81,7 +154,7 @@ public class ListDoubleLinked {
 
     public int indexOf(Acidente element) {
         int index = 0;
-        Node aux = header.nextRua;
+        Node aux = headerRua.nextRua;
         while (aux != null) {
             if (aux.element.equals(element)) {
                 return (index);
@@ -94,18 +167,18 @@ public class ListDoubleLinked {
     }
 
     public void clear() {
-        header.nextRua = trailer;
-        trailer.prevRua = header;
+        headerRua.nextRua = trailerRua;
+        trailerRua.prevRua = headerRua;
         count = 0;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        Node aux = header.nextRua;
+        Node aux = headerRua.nextRua;
         for (int i = 0; i < count; i++) {
             s.append(aux.element.toString());
-           System.out.println("\n");
+            //System.out.println("\n");
             aux = aux.nextRua;
         }
         return s.toString();
