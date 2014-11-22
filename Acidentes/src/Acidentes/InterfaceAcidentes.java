@@ -151,9 +151,8 @@ public class InterfaceAcidentes extends javax.swing.JFrame {
                         .addComponent(jRadioButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton2)
                     .addComponent(jButton4))
                 .addContainerGap(134, Short.MAX_VALUE))
         );
