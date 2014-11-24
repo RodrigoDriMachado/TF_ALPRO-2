@@ -71,7 +71,9 @@ public class CadastroAcidentes {
                 this.lista.add(a);    
                 
             }
-        } catch (IOException e) {
+        } catch (IOException e) 
+        {
+            System.out.println("ERRO Cads: " + e);
             return false;
         }
         return true;

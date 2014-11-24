@@ -58,21 +58,22 @@ public class ListDoubleLinked {
         Node novoNodo = new Node(element);
         if (headerData.nextData != trailerData) {
             Node auxData = headerData.nextData;
-            while (auxData.nextData != trailerData) {
+            while (auxData != trailerData) {
                 //se forem iguais colcoar 
                 //TODO: separar os testes, colocar teste de null
                 try {
                     if (element.getData().after(auxData.element.getData())) {
-                        if (element.getData().before(auxData.nextData.element.getData())) {
-                            novoNodo.prevData = auxData;
-                            novoNodo.nextData = auxData.nextData;
-                            auxData.nextData.prevData = novoNodo;
-                            auxData.nextData = novoNodo;
-                            return;
-                        } else {
-                            auxData = auxData.nextData;
+                            if (element.getData().before(auxData.element.getData())) {
+                                novoNodo.prevData = auxData;
+                                novoNodo.nextData = auxData.nextData;
+                                auxData.nextData.prevData = novoNodo;
+                                auxData.nextData = novoNodo;
+                                return;
+                            } else {
+                                auxData = auxData.nextData;
+                            }
                         }
-                    } else {
+                     else {
                         novoNodo.prevData = auxData;
                         novoNodo.nextData = auxData.nextData;
                         auxData.nextData.prevData = novoNodo;
@@ -80,17 +81,16 @@ public class ListDoubleLinked {
                         return;
                     }
                 } catch (Exception exp) {
-                    System.out.println("Erro: " + exp);
+                    System.out.println("Erro list: " + exp);
                 }
             }
-            if (auxData.nextData == trailerData) {
+            if (auxData == trailerData) {
                 novoNodo.prevData = trailerData.prevData;
                 novoNodo.nextData = trailerData;
                 trailerData.prevData.nextData = novoNodo;
                 trailerData.prevData = novoNodo;
             }
-        }
-        else {
+        } else {
             novoNodo.prevData = trailerData.prevData;
             novoNodo.nextData = trailerData;
             trailerData.prevData.nextData = novoNodo;
