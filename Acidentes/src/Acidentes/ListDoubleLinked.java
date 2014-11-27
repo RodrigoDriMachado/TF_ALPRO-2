@@ -56,57 +56,60 @@ public class ListDoubleLinked {
 
     public void add(Acidente element) {
         Node novoNodo = new Node(element);
-        if (headerData.nextData != trailerData) {
+        boolean inseriu = false;
+        if (count == 0) {
+            headerData.nextData = novoNodo;
+            trailerData.prevData = novoNodo;
+            novoNodo.prevData = headerData;
+            novoNodo.nextData = trailerData;
+            headerRua.nextRua = novoNodo;
+            trailerData.prevRua = novoNodo;
+            novoNodo.prevRua = headerRua;
+            novoNodo.nextRua = trailerRua;
+
+        } else {
             Node auxData = headerData.nextData;
             while (auxData != trailerData) {
-                //se forem iguais colcoar 
-                //TODO: separar os testes, colocar teste de null
                 try {
                     if (element.getData().after(auxData.element.getData())) {
-                            if (element.getData().before(auxData.element.getData())) {
-                                novoNodo.prevData = auxData;
-                                novoNodo.nextData = auxData.nextData;
-                                auxData.nextData.prevData = novoNodo;
-                                auxData.nextData = novoNodo;
-                                return;
-                            } else {
-                                auxData = auxData.nextData;
-                            }
-                        }
-                     else {
-                        novoNodo.prevData = auxData;
-                        novoNodo.nextData = auxData.nextData;
-                        auxData.nextData.prevData = novoNodo;
-                        auxData.nextData = novoNodo;
-                        return;
+                        auxData = auxData.nextData;
+                    } else if (element.getData().before(auxData.element.getData())) {
+                        novoNodo.nextData = auxData;
+                        novoNodo.prevData = auxData.prevData;
+                        auxData.prevData.nextData = novoNodo;
+                        auxData.prevData = novoNodo;
+                        inseriu = true;
+                        break;
+                    } else {
+                        novoNodo.nextData = auxData;
+                        novoNodo.prevData = auxData.prevData;
+                        auxData.prevData.nextData = novoNodo;
+                        auxData.prevData = novoNodo;
+                        inseriu = true;
+                        break;
                     }
                 } catch (Exception exp) {
                     System.out.println("Erro list: " + exp);
                 }
             }
-            if (auxData == trailerData) {
+            if (inseriu == false) {
                 novoNodo.prevData = trailerData.prevData;
                 novoNodo.nextData = trailerData;
                 trailerData.prevData.nextData = novoNodo;
                 trailerData.prevData = novoNodo;
             }
-        } else {
-            novoNodo.prevData = trailerData.prevData;
-            novoNodo.nextData = trailerData;
-            trailerData.prevData.nextData = novoNodo;
-            trailerData.prevData = novoNodo;
-        }
-        if (headerRua.nextRua != trailerRua) {
+            inseriu = false;
             Node auxRua = headerRua.nextRua;
             int str;
-            while (auxRua.nextRua != trailerRua) {
+            while (auxRua != trailerRua) {
                 str = element.getNome_rua().compareTo(auxRua.element.getNome_rua());
                 if (str < 0) {
                     novoNodo.nextRua = auxRua;
                     novoNodo.prevRua = auxRua.prevRua;
                     auxRua.prevRua.nextRua = novoNodo;
                     auxRua.prevRua = novoNodo;
-                    return;
+                    inseriu = true;
+                    break;
                 } else if (str > 0) {
                     auxRua = auxRua.nextRua;
                 } else {
@@ -114,20 +117,16 @@ public class ListDoubleLinked {
                     novoNodo.nextRua = auxRua.nextRua;
                     auxRua.nextRua.prevRua = novoNodo;
                     auxRua.nextRua = novoNodo;
-                    return;
+                    inseriu = true;
+                    break;
                 }
             }
-            if (auxRua.nextRua == trailerRua) {
-                novoNodo.nextRua = trailerRua;
+            if (inseriu == false) {
                 novoNodo.prevRua = trailerRua.prevRua;
+                novoNodo.nextRua = trailerRua;
                 trailerRua.prevRua.nextRua = novoNodo;
                 trailerRua.prevRua = novoNodo;
             }
-        } else {
-            novoNodo.nextRua = trailerRua;
-            novoNodo.prevRua = trailerRua.prevRua;
-            trailerRua.prevRua.nextRua = novoNodo;
-            trailerRua.prevRua = novoNodo;
         }
         count++;
     }
@@ -178,7 +177,7 @@ public class ListDoubleLinked {
         Node aux = headerRua.nextRua;
         for (int i = 0; i < count; i++) {
             s.append(aux.element.toString());
-            //System.out.println("\n");
+            System.out.println("\n");
             aux = aux.nextRua;
         }
         return s.toString();

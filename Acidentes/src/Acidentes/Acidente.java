@@ -129,8 +129,11 @@ public class Acidente {
 
     @Override
     public String toString() {
-        return "Acidente[" + "pref_rua=" + pref_rua + "\n"+ "nome_rua=" + nome_rua +"\n"
-                + "tp_acidente=" + tp_acidente +"\n" + "data=" + data + ']';
+        return "Acidente[" 
+                + "pref_rua=" + this.pref_rua 
+                + "\n"+ "nome_rua=" + this.nome_rua +"\n"
+                + "tp_acidente=" + this.tp_acidente +"\n" 
+                + "data=" + this.data + ']';
     }
   
 }
