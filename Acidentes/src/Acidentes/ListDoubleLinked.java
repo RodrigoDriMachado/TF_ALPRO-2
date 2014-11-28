@@ -5,9 +5,11 @@
  */
 package Acidentes;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  *
@@ -22,7 +24,13 @@ public class ListDoubleLinked {
     private Node posicaoData;
     private Node posicaoRua;
     private int count;
-    private HashMap<String, Integer> contaTurnoAcidente;
+    private HashMap<String, Integer> contaAcidenteDiaSemana;
+    private HashMap<String, Integer> contaAcidenteTurno;
+    private HashMap<String, Integer> contaAcidenteTempo;
+    private HashMap<Date, Integer> contaAcidenteDia;
+    private HashMap<String, Integer> contaAcidenteHora;
+    private Set<String> palavrasArq1;
+    private Set<String> palavrasArq2;
 
     private class Node {
 
@@ -46,6 +54,28 @@ public class ListDoubleLinked {
 
     }
 
+    public HashMap<String, Integer> getContaAcidenteTempo() {
+        return contaAcidenteTempo;
+    }
+    
+    public HashMap<String, Integer> getContaAcidenteDiaSemana() {
+        return contaAcidenteDiaSemana;
+    }
+
+    public HashMap<String, Integer> getContaAcidenteTurno() {
+        return contaAcidenteTurno;
+    }
+
+    public HashMap<Date, Integer> getContaAcidenteDia() {
+        return contaAcidenteDia;
+    }
+
+    public HashMap<String, Integer> getContaAcidenteHora() {
+        return contaAcidenteHora;
+    }
+    
+    
+
     public ListDoubleLinked() {
         this.headerRua = new Node(null);
         this.trailerRua = new Node(null);
@@ -58,12 +88,17 @@ public class ListDoubleLinked {
         this.count = 0;
         this.posicaoRua = headerRua;
         this.posicaoData = headerData;
-        contaTurnoAcidente = new HashMap<>();
-
+        contaAcidenteDiaSemana = new HashMap<>();
+        contaAcidenteTurno = new HashMap<>();
+        contaAcidenteTempo = new HashMap<>();
+        contaAcidenteDia = new HashMap<>();
+        contaAcidenteHora = new HashMap<>();
     }
 
     public void add(Acidente element) {
         Node novoNodo = new Node(element);
+        Date aux;
+        String stringAux;
         boolean inseriu = false;
         if (count == 0) {
             headerData.nextData = novoNodo;
@@ -74,6 +109,19 @@ public class ListDoubleLinked {
             trailerRua.prevRua = novoNodo;
             novoNodo.prevRua = headerRua;
             novoNodo.nextRua = trailerRua;
+            contaAcidenteDiaSemana.put(element.getDia_sem(), 1);
+            contaAcidenteTurno.put(element.getTurno(), 1);
+            contaAcidenteTempo.put(element.getTempo(), 1);
+            
+            aux = null;
+            aux = element.getData();
+            aux.setHours(0);
+            aux.setMinutes(0);
+            aux.setSeconds(0);
+            contaAcidenteDia.put(aux,1);
+            
+            stringAux = "" + element.getData().getHours() + ":" + element.getData().getMinutes();
+            contaAcidenteHora.put(stringAux,1);
         }
           /*  if (contaTurnoAcidente.containsKey(element.getTurno())) {
                 contaTurnoAcidente.put(element.getTurno(), contaTurnoAcidente.get(element.getTurno()) + 1);
@@ -90,6 +138,41 @@ public class ListDoubleLinked {
                 contaTurnoAcidente.put(element.getTurno(), 1);
             }*/
         else{
+            if(contaAcidenteDiaSemana.containsKey(element.getDia_sem())){
+                contaAcidenteDiaSemana.put(element.getDia_sem(), contaAcidenteDiaSemana.get(element.getDia_sem())+1);
+            }
+            else{
+                contaAcidenteDiaSemana.put(element.getDia_sem(), 1);
+            }
+            if(contaAcidenteTurno.containsKey(element.getTurno())){
+                contaAcidenteTurno.put(element.getTurno(), contaAcidenteTurno.get(element.getTurno())+1);
+            }
+            else{
+                contaAcidenteTurno.put(element.getTurno(), 1);
+            }
+            if(contaAcidenteTempo.containsKey(element.getTempo())){
+                contaAcidenteTempo.put(element.getTempo(), contaAcidenteTurno.get(element.getTurno())+1);
+            }
+            else{
+                contaAcidenteTempo.put(element.getTempo(), 1);
+            }
+            stringAux = "" + element.getData().getHours() + ":" + element.getData().getMinutes();
+            if(contaAcidenteHora.containsKey(stringAux)){
+                contaAcidenteHora.put(stringAux, contaAcidenteHora.get(stringAux)+1);
+            }
+            else{
+                contaAcidenteHora.put(stringAux,1);
+            }
+            aux = element.getData();
+            aux.setHours(0);
+            aux.setMinutes(0);
+            aux.setSeconds(0);
+             if(contaAcidenteDia.containsKey(aux)){
+                contaAcidenteDia.put(aux, contaAcidenteDia.get(aux)+1);
+            }
+            else{
+                contaAcidenteDia.put(aux, 1);
+            }
             Node auxData = headerData.nextData;
             while (auxData != trailerData) {
                 try {

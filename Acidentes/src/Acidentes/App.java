@@ -21,6 +21,13 @@ public class App {
         } else {
             System.out.println("Erro de arquivo");
         }
+        
+        System.out.println("");
+        System.out.println("Acidentes Dia Semana: " + cads.retornaDiaSemana());
+        System.out.println("Acidentes Turno: " + cads.retornaTurno());
+        System.out.println("Acidentes Tempo: "+ cads.retornaAcidenteTempo());
+        System.out.println("Acidentes Dia: "+ cads.retornaAcidenteDia());
+        System.out.println("Acidentes Hora: "+ cads.retornaAcidenteHora());
         System.out.println("FIM APP");
         
 
