@@ -46,19 +46,42 @@ public class CadastroAcidentes {
     public void add(Acidente f) {
          lista.add(f);
     }
+    /*
+    public String retornaRua(){
+        return lista.retornaRua();
+    }
+    /*
+    public String retornaTurnoMaisAcidente(){
+        return lista.verificaAcidentes();
+    }*/
 
      public boolean readFile(String nomeArq) {
         Path path = Paths.get(nomeArq);
         try (Scanner sc = new Scanner(Files.newBufferedReader(path, Charset.defaultCharset()))) {
-            String str, nome, tp_acidente,prefixo_rua;
+            /**
+             * declaração de variaveis
+             */
+            String str, nome, tp_acidente,prefixo_rua,dia_sem;
+            String tempo, turno, regiao;
             Date data =null;
+            int qntd_feriados, qntd_morte, qntd_morte_post, qntd_fatais, qntd_auto, qntd_taxi,
+            qntd_lotc , qntd_onibus_urb, qntd_onb_int, qntd_caminhao, qntd_moto, qntd_carroca, qntd_bicicleta;
+           /**
+            * setando formatação da dat
+            */
             SimpleDateFormat format = new SimpleDateFormat("yyyymmdd HH:mm");
             sc.useDelimiter("[;\\n]"); // separadores: ; e nova linha
-            sc.nextLine();
+            //ignora a primeira linha do cabeçalho
+            sc.nextLine(); 
+            /**
+             * Começa a ler e atribui os valores para as variaveis declaradas acima
+             * 
+             */
+           //	NOITE_DIA	REGIAO 
             while (sc.hasNext()) {
                 str = sc.next();
-                prefixo_rua = str;
-                nome = str;
+                prefixo_rua = getLogradouroPrefixoRua(str);
+                nome = getLogradouroNomeRua(str);
                 str =  sc.next();
                 tp_acidente = str;
                 str = sc.next();
@@ -67,7 +90,27 @@ public class CadastroAcidentes {
                 } catch (Exception ex) {
                     System.out.println("Erro: " + ex);
                 }
-                Acidente a = new  Acidente (prefixo_rua,nome, tp_acidente, data);
+                dia_sem=sc.next();
+                str = sc.next();
+                qntd_feriados = Integer.parseInt(str);
+                qntd_morte = Integer.parseInt(sc.next());
+                qntd_morte_post = Integer.parseInt(sc.next());
+                qntd_fatais = Integer.parseInt(sc.next());
+                qntd_auto = Integer.parseInt(sc.next());
+                qntd_taxi = Integer.parseInt(sc.next());
+                qntd_lotc= Integer.parseInt(sc.next());
+                qntd_onibus_urb = Integer.parseInt(sc.next());
+                qntd_onb_int = Integer.parseInt(sc.next());
+                qntd_caminhao = Integer.parseInt(sc.next());
+                qntd_moto =Integer.parseInt(sc.next());
+                qntd_carroca = Integer.parseInt(sc.next());
+                qntd_bicicleta = Integer.parseInt(sc.next());
+                tempo = sc.next();
+                turno = sc.next();
+                regiao = sc.next().replaceAll("\\r*", "");
+                Acidente a = new Acidente(prefixo_rua, nome,  tp_acidente,  data,  dia_sem,  qntd_feriados,  turno,  regiao,  qntd_morte,  qntd_morte_post,  qntd_fatais,  qntd_auto, qntd_taxi
+            ,  qntd_lotc,  qntd_onibus_urb,  qntd_onb_int,  qntd_caminhao,  qntd_moto,  qntd_carroca,  qntd_bicicleta,  tempo);
+                                        
                 this.lista.add(a);    
                 
             }
@@ -81,5 +124,25 @@ public class CadastroAcidentes {
     @Override
     public String toString() {
         return lista.toString();
+    }
+    
+    private String getLogradouroPrefixo (String fullLogradouro){
+        if(fullLogradouro.indexOf("R.")>0)
+            return fullLogradouro.substring(fullLogradouro.indexOf("R "));
+        if(fullLogradouro.indexOf("AV.")>0)
+            return fullLogradouro.substring(fullLogradouro.indexOf("AV "));
+        return null;
+    }
+    
+    private String getLogradouroPrefixoRua (String fullLogradouro){
+        if(fullLogradouro.indexOf(" ")>0)
+            return fullLogradouro.substring(0, fullLogradouro.indexOf(" "));
+        return null;
+    }
+    
+    private String getLogradouroNomeRua (String fullLogradouro){
+        if(fullLogradouro.indexOf(" ")>0)
+            return fullLogradouro.substring(fullLogradouro.indexOf(" ")).trim();
+        return null;
     }
 }

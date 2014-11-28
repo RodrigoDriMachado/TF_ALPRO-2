@@ -5,6 +5,7 @@
  */
 package Acidentes;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -18,7 +19,10 @@ public class ListDoubleLinked {
     private Node trailerRua;
     private Node headerData;
     private Node trailerData;
+    private Node posicaoData;
+    private Node posicaoRua;
     private int count;
+    private HashMap<String, Integer> contaTurnoAcidente;
 
     private class Node {
 
@@ -52,6 +56,10 @@ public class ListDoubleLinked {
         headerData.nextData = trailerData;
         trailerData.prevData = headerData;
         this.count = 0;
+        this.posicaoRua = headerRua;
+        this.posicaoData = headerData;
+        contaTurnoAcidente = new HashMap<>();
+
     }
 
     public void add(Acidente element) {
@@ -63,11 +71,25 @@ public class ListDoubleLinked {
             novoNodo.prevData = headerData;
             novoNodo.nextData = trailerData;
             headerRua.nextRua = novoNodo;
-            trailerData.prevRua = novoNodo;
+            trailerRua.prevRua = novoNodo;
             novoNodo.prevRua = headerRua;
             novoNodo.nextRua = trailerRua;
+        }
+          /*  if (contaTurnoAcidente.containsKey(element.getTurno())) {
+                contaTurnoAcidente.put(element.getTurno(), contaTurnoAcidente.get(element.getTurno()) + 1);
+            }
+            else {
+                contaTurnoAcidente.put(element.getTurno(), 1);
+            }
 
         } else {
+            if (contaTurnoAcidente.containsKey(element.getTurno())) {
+                contaTurnoAcidente.put(element.getTurno(), contaTurnoAcidente.get(element.getTurno()) + 1);
+            } // Se não ele adiciona a palavra pela primeira vez
+            else {
+                contaTurnoAcidente.put(element.getTurno(), 1);
+            }*/
+        else{
             Node auxData = headerData.nextData;
             while (auxData != trailerData) {
                 try {
@@ -131,6 +153,14 @@ public class ListDoubleLinked {
         count++;
     }
 
+    /*public String verificaAcidentes() {
+        if(contaTurnoAcidente.get("noite")>contaTurnoAcidente.get("dia"))
+        return "noite";
+        else{
+            return "dia";
+        }
+    }*/
+
     public boolean isEmpty() {
         return count == 0;
     }
@@ -170,14 +200,22 @@ public class ListDoubleLinked {
         trailerRua.prevRua = headerRua;
         count = 0;
     }
-
+/*
+    public String retornaRua() {
+        String rua;
+        Node aux = posicaoRua.nextRua;
+        rua = aux.element.getNome_rua();
+        posicaoRua = posicaoRua.nextRua;
+        return rua;
+    }
+*/
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         Node aux = headerRua.nextRua;
-        for (int i = 0; i < count; i++) {
+        while (aux.element != null) {
             s.append(aux.element.toString());
-            System.out.println("\n");
+            s.append("\n");
             aux = aux.nextRua;
         }
         return s.toString();

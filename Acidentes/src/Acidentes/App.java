@@ -15,11 +15,16 @@ public class App {
 
         CadastroAcidentes cads = CadastroAcidentes.getInstance();
         cads.cleanAll();
-        if (cads.readFile("teste23.csv")) {
-            System.out.println(cads.toString());
+        System.out.println("INICIO APP");
+        if (cads.readFile("acidentes-2013_2.csv")) {
+            System.out.println("Teste de String: " + cads.toString());
         } else {
-            System.out.println("erro ao ler arquvio");
+            System.out.println("Erro de arquivo");
         }
+        System.out.println("FIM APP");
+        
+
+    //System.out.println("Turno com mais acidentes: " + cads.retornaTurnoMaisAcidente().toString());
 
     }
 
