@@ -17,7 +17,7 @@ public class App {
         cads.cleanAll();
         System.out.println("INICIO APP");
         if (cads.readFile("acidentes-2013_2.csv")) {
-            System.out.println("Teste de String: " + cads.toString());
+            System.out.println(cads.toString());
         } else {
             System.out.println("Erro de arquivo");
         }
@@ -29,10 +29,6 @@ public class App {
         System.out.println("Acidentes Dia: "+ cads.retornaAcidenteDia());
         System.out.println("Acidentes Hora: "+ cads.retornaAcidenteHora());
         System.out.println("FIM APP");
-        
-
-    //System.out.println("Turno com mais acidentes: " + cads.retornaTurnoMaisAcidente().toString());
-
     }
 
 }

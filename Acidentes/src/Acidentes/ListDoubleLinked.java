@@ -8,6 +8,7 @@ package Acidentes;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -29,7 +30,9 @@ public class ListDoubleLinked {
     private HashMap<String, Integer> contaAcidenteTempo;
     private HashMap<Date, Integer> contaAcidenteDia;
     private HashMap<String, Integer> contaAcidenteHora;
-    private Set<String> palavrasArq1;
+    //private HashMap<String, Integer> contaAcidenteHora;
+    private Set<String> listaRua;
+    //private Map<String, Set<String>> ruasDiaSemana;
     private Set<String> palavrasArq2;
 
     private class Node {
@@ -54,28 +57,6 @@ public class ListDoubleLinked {
 
     }
 
-    public HashMap<String, Integer> getContaAcidenteTempo() {
-        return contaAcidenteTempo;
-    }
-    
-    public HashMap<String, Integer> getContaAcidenteDiaSemana() {
-        return contaAcidenteDiaSemana;
-    }
-
-    public HashMap<String, Integer> getContaAcidenteTurno() {
-        return contaAcidenteTurno;
-    }
-
-    public HashMap<Date, Integer> getContaAcidenteDia() {
-        return contaAcidenteDia;
-    }
-
-    public HashMap<String, Integer> getContaAcidenteHora() {
-        return contaAcidenteHora;
-    }
-    
-    
-
     public ListDoubleLinked() {
         this.headerRua = new Node(null);
         this.trailerRua = new Node(null);
@@ -99,6 +80,7 @@ public class ListDoubleLinked {
         Node novoNodo = new Node(element);
         Date aux;
         String stringAux;
+        //String auxDia
         boolean inseriu = false;
         if (count == 0) {
             headerData.nextData = novoNodo;
@@ -114,7 +96,7 @@ public class ListDoubleLinked {
             contaAcidenteTempo.put(element.getTempo(), 1);
             
             aux = null;
-            aux = element.getData();
+            aux = (Date) element.getData().clone();
             aux.setHours(0);
             aux.setMinutes(0);
             aux.setSeconds(0);
@@ -123,20 +105,7 @@ public class ListDoubleLinked {
             stringAux = "" + element.getData().getHours() + ":" + element.getData().getMinutes();
             contaAcidenteHora.put(stringAux,1);
         }
-          /*  if (contaTurnoAcidente.containsKey(element.getTurno())) {
-                contaTurnoAcidente.put(element.getTurno(), contaTurnoAcidente.get(element.getTurno()) + 1);
-            }
-            else {
-                contaTurnoAcidente.put(element.getTurno(), 1);
-            }
 
-        } else {
-            if (contaTurnoAcidente.containsKey(element.getTurno())) {
-                contaTurnoAcidente.put(element.getTurno(), contaTurnoAcidente.get(element.getTurno()) + 1);
-            } // Se não ele adiciona a palavra pela primeira vez
-            else {
-                contaTurnoAcidente.put(element.getTurno(), 1);
-            }*/
         else{
             if(contaAcidenteDiaSemana.containsKey(element.getDia_sem())){
                 contaAcidenteDiaSemana.put(element.getDia_sem(), contaAcidenteDiaSemana.get(element.getDia_sem())+1);
@@ -163,7 +132,7 @@ public class ListDoubleLinked {
             else{
                 contaAcidenteHora.put(stringAux,1);
             }
-            aux = element.getData();
+            aux = (Date) element.getData().clone();
             aux.setHours(0);
             aux.setMinutes(0);
             aux.setSeconds(0);
@@ -235,14 +204,26 @@ public class ListDoubleLinked {
         }
         count++;
     }
+    
+    public HashMap<String, Integer> getContaAcidenteTempo() {
+        return contaAcidenteTempo;
+    }
+    
+    public HashMap<String, Integer> getContaAcidenteDiaSemana() {
+        return contaAcidenteDiaSemana;
+    }
 
-    /*public String verificaAcidentes() {
-        if(contaTurnoAcidente.get("noite")>contaTurnoAcidente.get("dia"))
-        return "noite";
-        else{
-            return "dia";
-        }
-    }*/
+    public HashMap<String, Integer> getContaAcidenteTurno() {
+        return contaAcidenteTurno;
+    }
+
+    public HashMap<Date, Integer> getContaAcidenteDia() {
+        return contaAcidenteDia;
+    }
+
+    public HashMap<String, Integer> getContaAcidenteHora() {
+        return contaAcidenteHora;
+    }
 
     public boolean isEmpty() {
         return count == 0;
@@ -295,12 +276,27 @@ public class ListDoubleLinked {
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        Node aux = headerRua.nextRua;
-        while (aux.element != null) {
-            s.append(aux.element.toString());
+        Node auxRua = headerRua.nextRua;
+        Node auxData = headerData.nextData;
+        s.append("Imprimindo Por RUA");
+        s.append("\n");
+        s.append("\n");
+        while (auxRua.element != null) {
+            s.append(auxRua.element.toString());
             s.append("\n");
-            aux = aux.nextRua;
+            auxRua = auxRua.nextRua;
         }
+            s.append("\n");
+            s.append("\n");
+            s.append("Imprimindo Por Data");
+            s.append("\n");
+            s.append("\n");
+         while (auxData.element != null) {
+            s.append(auxData.element.toString());
+            s.append("\n");
+            auxData = auxData.nextData;
+        }
+        
         return s.toString();
     }
 }
