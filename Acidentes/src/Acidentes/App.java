@@ -15,20 +15,18 @@ public class App {
 
         CadastroAcidentes cads = CadastroAcidentes.getInstance();
         cads.cleanAll();
-        System.out.println("INICIO APP");
-        if (cads.readFile("acidentes-2013_2.csv")) {
+        if (cads.readFile("acidentes-2013.csv")) {
             System.out.println(cads.toString());
         } else {
             System.out.println("Erro de arquivo");
         }
         
         System.out.println("");
-        System.out.println("Acidentes Dia Semana: " + cads.retornaDiaSemana());
-        System.out.println("Acidentes Turno: " + cads.retornaTurno());
-        System.out.println("Acidentes Tempo: "+ cads.retornaAcidenteTempo());
-        System.out.println("Acidentes Dia: "+ cads.retornaAcidenteDia());
-        System.out.println("Acidentes Hora: "+ cads.retornaAcidenteHora());
-        System.out.println("FIM APP");
+        System.out.println("Acontecem mais acidentes no Dia Semana: " + cads.retornaDiaSemana());
+        System.out.println("Acontecem mais acidentes no Turno: " + cads.retornaTurno());
+        System.out.println("Acontecem mais acidentes em tempo: "+ cads.retornaAcidenteTempo());
+        System.out.println("Acontecem mais acidentes no dia do mês: "+ cads.retornaAcidenteDia());
+        System.out.println("Acontecem mais acidentes na Hora: "+ cads.retornaAcidenteHora());
     }
 
 }
